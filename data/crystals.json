@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Rose Quartz",
+    "meaning": "Unconditional love, compassion, self-worth.",
+    "image_url": "https://images.unsplash.com/photo-1597764025039-5c32a4c2f2b7",
+    "category": "Love"
+  },
+  {
+    "id": 2,
+    "name": "Amethyst",
+    "meaning": "Calm, protection, restful sleep.",
+    "image_url": "https://images.unsplash.com/photo-1585386959984-a415522316e7",
+    "category": "Protection"
+  },
+  {
+    "id": 3,
+    "name": "Citrine",
+    "meaning": "Joy, abundance, motivation.",
+    "image_url": "https://images.unsplash.com/photo-1600697395547-a901e79c9a9a",
+    "category": "Abundance"
+  },
+  {
+    "id": 4,
+    "name": "Obsidian",
+    "meaning": "Grounding, shielding from negative energy.",
+    "image_url": "https://images.unsplash.com/photo-1606851092711-9d1c4f8a1f67",
+    "category": "Grounding"
+  },
+  {
+    "id": 5,
+    "name": "Clear Quartz",
+    "meaning": "Clarity, focus, energy amplifier.",
+    "image_url": "https://images.unsplash.com/photo-1567113463300-102a7d3354af",
+    "category": "Clarity"
+  }
+]
