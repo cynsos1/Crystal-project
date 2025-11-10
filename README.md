@@ -1,28 +1,42 @@
-# Crystal Energy Guide (Starter)
+# Crystal Energy Guide
 
-This is a simple starter for your class deliverables.
+## Project Description
+The Crystal Energy Guide is a web-based application that allows users to browse, add, edit, and delete crystal records using local storage. It demonstrates front-end CRUD operations, data persistence, input validation, and user interface design.
 
-## Pages (5+)
-- `index.html` (Home)
-- `crystals.html` (Crystals listing + search)
-- `about.html`
-- `contact.html`
-- `login.html` (Demo login using localStorage)
+## Features
+- View a catalog of 12+ crystals with names, meanings, and intentions.
+- Add new crystals with image URLs.
+- Edit and delete existing crystal entries.
+- Real-time search filtering.
+- Responsive, clean, and modern layout.
 
-## How to run
-Open `index.html` in your browser. For local JSON fetch to work reliably, use a simple local server:
-- Python: `python -m http.server 8000` then visit http://localhost:8000
+## Security Measures Beyond Password Complexity
+- Added a strict Content Security Policy (CSP) meta tag to restrict resource loading.
+- Escaped all dynamic text to prevent XSS attacks.
+- Used HTML5 validation to enforce proper input and block incomplete data.
+- No third-party scripts or inline JavaScript used.
+- All assets loaded locally via HTTPS-safe paths.
 
-## Deploying
-1. Create a GitHub repo and push these files.
-2. Enable GitHub Pages (Settings → Pages → Deploy from branch → `main` → `/root`).
-3. Share the URL in your Word document.
+## Cosmetic Enhancements
+- Modern grid card layout with soft shadows and accent colors.
+- Dialog-based add/edit form with validation.
+- Responsive design for mobile and desktop.
+- Search bar styling and consistent color palette.
 
-## Mock Database Schema
-| Field | Type | Description |
-|------|------|-------------|
-| id | INT | Unique ID |
-| name | VARCHAR(50) | Crystal name |
-| meaning | VARCHAR(255) | Energy/properties |
-| image_url | VARCHAR(255) | Image URL |
-| category | VARCHAR(50) | Intention (e.g., Love, Protection) |
+## Data
+The main dataset is stored in `/data/crystals.json`, containing 12 crystal records. Local storage is used to save updates.
+
+## How to Run
+1. Download or clone the repository.
+2. Open `index.html` in your browser.
+3. The app will load automatically and display the default crystal records.
+
+## Skills Demonstrated
+- HTML5, CSS3, and JavaScript (ES6)
+- Data persistence with localStorage
+- Secure coding practices (CSP, validation, escaping)
+- UI/UX design principles
+- Version control with Git and GitHub
+
+## Link to Project
+[Crystal Energy Guide Repository]https://cynsos1.github.io/Crystal-project/
