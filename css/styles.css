@@ -1,149 +1,57 @@
-/* ===== Crystal Energy Guide – Dark Neon Makeover ===== */
+/* ===== Clean Realistic Theme ===== */
 :root{
-  --bg-0:#0c0b12;
-  --bg-1:#111018;
-  --card:#141323;
-  --muted:#a9a7c7;
-  --text:#f4f2ff;
-  --accent:#8b5cf6;      /* purple */
-  --accent-2:#22d3ee;    /* teal pop */
-  --chip:#2a2842;
-  --chip-text:#d8d6ff;
-  --ring: 0 0 0 2px rgba(139,92,246,.35), 0 6px 22px rgba(139,92,246,.18);
-  --shadow: 0 10px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.03);
-  --radius:16px;
+  --bg:#f6f7fb;
+  --text:#1f2430;
+  --muted:#70778a;
+  --card:#ffffff;
+  --line:#e7e9f0;
+  --accent:#6d28d9;
+  --radius:14px;
+  --shadow: 0 8px 24px rgba(20,26,40,.08);
 }
 
-/* page bg */
-html,body{
-  height:100%;
-  background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(139,92,246,.15), transparent 60%),
-    radial-gradient(900px 500px at 110% 20%, rgba(34,211,238,.12), transparent 55%),
-    linear-gradient(180deg, var(--bg-0), var(--bg-1));
-  color:var(--text);
-  font: 500 16px/1.6 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-  -webkit-font-smoothing:antialiased;
-  margin:0;
-}
+html,body{ background:var(--bg); color:var(--text); font:500 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; margin:0; }
 
 /* nav */
-.nav{
-  position: sticky; top:0; z-index:40;
-  backdrop-filter: blur(8px);
-  background: rgba(12,11,18,.6);
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.nav .logo{
-  display:inline-block; padding:18px 22px; font-weight:700; text-decoration:none; color:var(--text);
-}
-.nav ul{list-style:none; margin:0; padding:0 16px; display:flex; gap:10px; align-items:center;}
-.nav li a{
-  color:var(--muted); text-decoration:none; padding:8px 12px; border-radius:999px;
-}
-.nav li a:hover{ color:var(--text); background:rgba(255,255,255,.06); }
+.nav{ position:sticky; top:0; z-index:10; background:#fff; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; }
+.nav .logo{ display:inline-block; padding:16px 20px; font-weight:700; color:var(--text); text-decoration:none; }
+.nav ul{ list-style:none; margin:0; padding:0 16px; display:flex; gap:8px; align-items:center; }
+.nav li a{ color:var(--muted); text-decoration:none; padding:8px 12px; border-radius:10px; }
+.nav li a:hover{ background:#f0f2f7; color:var(--text); }
 
-/* container */
-.container{ max-width:1180px; margin:40px auto; padding:0 20px; }
+/* layout */
+.container{ max-width:1180px; margin:28px auto 60px; padding:0 20px; }
+.page-head{ display:flex; align-items:center; justify-content:space-between; margin:6px 0 12px; }
+.page-head h1{ margin:0; font-size:32px; }
 
-/* page header row */
-.page-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
-.page-head h1{ margin:0; font-size:34px; letter-spacing:.2px; }
+/* controls */
+.btn{ background:var(--accent); color:#fff; border:0; padding:10px 16px; border-radius:999px; font-weight:600; cursor:pointer; box-shadow:0 6px 18px rgba(109,40,217,.25); }
+.btn:hover{ filter:brightness(1.05); }
+#search{ width:100%; padding:14px 16px; margin:14px 0 24px; border:1px solid var(--line); border-radius:12px; outline:none; background:#fff; color:var(--text); }
+#search::placeholder{ color:#9aa0af; }
+#search:focus{ border-color:#cfd5e3; box-shadow:0 0 0 3px rgba(109,40,217,.12); }
 
-/* button – pill */
-.btn{
-  display:inline-flex; align-items:center; gap:8px;
-  background:linear-gradient(135deg, var(--accent), #6d28d9);
-  color:#fff; border:0; padding:10px 16px; border-radius:999px;
-  box-shadow: var(--ring);
-  cursor:pointer; font-weight:600;
-}
-.btn:hover{ filter:brightness(1.06); transform:translateY(-1px); }
-.btn:active{ transform:translateY(0); }
-
-/* search */
-#search{
-  width:100%; padding:14px 16px; margin:10px 0 24px;
-  color:var(--text); background:#0f0e19; border:1px solid rgba(255,255,255,.08);
-  border-radius:12px; outline:none;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
-}
-#search::placeholder{ color:#8b88a9; }
-#search:focus{ box-shadow: var(--ring); }
-
-/* grid */
-.grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap:22px;
-}
-
-/* make ANY child of #crystalList look like a card (no class changes needed) */
-#crystalList > *{
-  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00)),
-              var(--card);
-  border:1px solid rgba(255,255,255,.06);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow:hidden;
-  transition:.25s ease;
-}
-#crystalList > *:hover{ transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,.55); }
-
-/* top art zone */
-#crystalList > *::before{
-  content:"";
-  display:block; height:150px;
-  background:
-    radial-gradient(140px 80px at 70% -10%, rgba(139,92,246,.35), transparent 50%),
-    radial-gradient(120px 70px at -10% 110%, rgba(34,211,238,.25), transparent 55%),
-    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.00));
-  mask:
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 70"><path d="M50 4 L90 26 L70 66 L30 66 L10 26 Z" fill="none" stroke="%238b5cf6" stroke-width="6" stroke-linejoin="round"/></svg>')
-    center/70% 70% no-repeat, linear-gradient(#000,#000);
-}
-
-/* card body */
-#crystalList > * > *{ padding:16px 16px 18px; }
-#crystalList h3, #crystalList .title{
-  margin:6px 0 2px; font-size:18px; line-height:1.3;
-}
-#crystalList p, #crystalList .subtitle{ margin:0 0 10px; color:var(--muted); }
-
-/* chips */
-.tag, .chip{
-  display:inline-flex; align-items:center; padding:6px 10px;
-  border-radius:999px; background:var(--chip); color:var(--chip-text);
-  font-size:12px; margin:4px 6px 0 0; border:1px solid rgba(255,255,255,.06);
-}
-
-/* action row */
-.card-actions, #crystalList .actions{ display:flex; gap:8px; margin-top:12px; }
-button, .btn-ghost{
-  background:#1a1930; color:#e9e6ff; border:1px solid rgba(255,255,255,.08);
-  padding:8px 12px; border-radius:10px; cursor:pointer;
-}
-button:hover, .btn-ghost:hover{ background:#221f3e; }
+/* grid & cards */
+.grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:22px; }
+.card{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; display:flex; flex-direction:column; }
+.photo{ width:100%; aspect-ratio:4/3; background:#f1f3f8 center/cover no-repeat; }
+.body{ padding:14px 14px 16px; }
+.card h3{ margin:6px 0 2px; font-size:18px; }
+.card p{ margin:0; color:var(--muted); }
+.tags{ margin-top:10px; display:flex; flex-wrap:wrap; gap:8px; }
+.tag{ background:#eef0f7; color:#4c5467; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--line); }
+.actions{ margin-top:14px; display:flex; gap:8px; }
+.actions button{ border:1px solid var(--line); background:#fff; color:#3a4050; padding:8px 12px; border-radius:10px; cursor:pointer; }
+.actions button:hover{ background:#f5f7fb; }
 
 /* footer */
-.footer{
-  color:#8f8cae; padding:36px 0; text-align:center;
-  border-top:1px solid rgba(255,255,255,.06);
-  background:linear-gradient(180deg, transparent, rgba(255,255,255,.02));
-}
+.footer{ color:#6b7280; padding:36px 0; text-align:center; border-top:1px solid var(--line); background:#fff; }
 
-/* ===== Optional: Add-Form Modal polish (if you use it) ===== */
-#addFormOverlay{ display:none; position:fixed; inset:0; z-index:9999; 
-  background:rgba(6,5,12,.7); backdrop-filter: blur(8px); }
-#addFormCard{
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  width:min(92vw,460px); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)), var(--card);
-  border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:20px; color:var(--text);
-  box-shadow: var(--shadow);
-}
-#addFormCard h2{ margin:0 0 12px; }
-.af-field{ width:100%; padding:12px 14px; margin:8px 0;
-  background:#0f0e19; border:1px solid rgba(255,255,255,.08); border-radius:12px; color:var(--text); }
-.af-row{ display:flex; justify-content:flex-end; gap:10px; }
-.af-primary{ background:linear-gradient(135deg, var(--accent), #6d28d9); color:#fff; border:0; }
-.af-ghost{ background:transparent; color:#d7d5ff; }
+/* modal */
+#addFormOverlay{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); backdrop-filter: blur(4px); z-index:50; }
+#addFormCard{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:min(92vw,520px); background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); padding:18px; }
+#addFormCard h2{ margin:6px 0 10px; }
+.af-field{ width:100%; padding:12px 14px; margin:8px 0; border:1px solid var(--line); border-radius:10px; }
+.af-row{ display:flex; justify-content:flex-end; gap:10px; margin-top:6px; }
+.af-primary{ background:var(--accent); color:#fff; border:0; padding:10px 14px; border-radius:10px; }
+.af-ghost{ background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 14px; }
