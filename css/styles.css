@@ -55,3 +55,70 @@ html,body{ background:var(--bg); color:var(--text); font:500 16px/1.6 Inter, sys
 .af-row{ display:flex; justify-content:flex-end; gap:10px; margin-top:6px; }
 .af-primary{ background:var(--accent); color:#fff; border:0; padding:10px 14px; border-radius:10px; }
 .af-ghost{ background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 14px; }
+html, body { background: #0b0b12; }
+
+/* keep content above the sky */
+.nav, .container, .footer { position: relative; z-index: 2; }
+
+/* sky canvas */
+#sky{
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(1200px 700px at 50% -20%, rgba(88,47,255,0.18), transparent 60%),
+    radial-gradient(900px 500px at 110% 20%, rgba(0,204,255,0.12), transparent 55%),
+    linear-gradient(#05050a,#0b0b12 45%, #0e0b17);
+  filter: saturate(1.05) contrast(1.05);
+}
+
+/* moon */
+#sky .moon{
+  position: absolute;
+  top: 70px; right: 8%;
+  width: 120px; aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, #fff, #e9e7ff 40%, #c3c0ff 65%, #978fff 85%, #6b62d8 100%);
+  box-shadow:
+    0 0 40px 10px rgba(180,170,255,.25),
+    0 0 140px 40px rgba(120,110,255,.18);
+  animation: moonGlow 6s ease-in-out infinite alternate;
+}
+@keyframes moonGlow { to { box-shadow:
+  0 0 55px 18px rgba(200,190,255,.32),
+  0 0 180px 55px rgba(140,130,255,.22); } }
+
+/* stars (individual elements added by JS) */
+.star{
+  position:absolute; width:2px; height:2px; border-radius:50%;
+  background: #d9d7ff;
+  opacity:.8;
+  box-shadow:0 0 6px 1px rgba(220,215,255,.55);
+  animation: twinkle var(--twinkle,3s) ease-in-out infinite;
+}
+@keyframes twinkle{
+  0%,100%{ transform:scale(0.9); opacity:.6;}
+  50%{ transform:scale(1.25); opacity:1;}
+}
+
+/* shooting star */
+.shoot{
+  --len: 160px;
+  position:absolute; top: 20%; left: -200px;
+  width: 2px; height: 2px; border-radius:50%;
+  background: #fff;
+  box-shadow: 0 0 8px 3px rgba(255,255,255,.9);
+  transform: rotate(15deg);
+  /* tail */
+  filter: drop-shadow(-20px 10px 6px rgba(255,255,255,.8));
+  animation: fly 2.2s linear forwards;
+}
+.shoot::after{
+  content:"";
+  position:absolute; right:2px; top:0; height:2px; width: var(--len);
+  background: linear-gradient(90deg, rgba(255,255,255,.85), rgba(255,255,255,.0));
+  transform: translateX(-100%);
+}
+@keyframes fly{
+  from { transform: translate3d(0,0,0) rotate(15deg); opacity:1; }
+  to   { transform: translate3d(130vw,40vh,0) rotate(15deg); opacity:0; }
+}
