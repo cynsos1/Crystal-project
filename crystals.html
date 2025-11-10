@@ -6,82 +6,108 @@
   <title>Crystals - Crystal Energy Guide</title>
   <link rel="stylesheet" href="css/styles.css"/>
   <script defer src="js/app.js"></script>
+
+  <style>
+    /* isolated modal styles so they don't fight your site CSS */
+    #addFormOverlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:9999; }
+    #addFormCard { 
+      position: absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      background:#13131a; color:#fff; width: min(92vw, 420px); border-radius:16px; 
+      box-shadow: 0 10px 40px rgba(0,0,0,.5); padding:20px; 
+    }
+    #addFormCard h2 { margin:0 0 12px 0; font-size:1.25rem; }
+    .af-field { width:100%; margin:8px 0; padding:10px 12px; border-radius:10px; border:1px solid #2a2a33; background:#0f0f15; color:#fff; }
+    .af-row { display:flex; gap:10px; justify-content:flex-end; margin-top:12px; }
+    .af-btn { padding:10px 14px; border-radius:999px; border:0; cursor:pointer; }
+    .af-primary { background:#7c3aed; color:#fff; }
+    .af-ghost { background:transparent; color:#ddd; border:1px solid #3a3a46; }
+    /* header row */
+    .page-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin: 12px 0 16px; }
+    .pill { display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; border:1px solid #2f2f39; background:#14141c; color:#eaeaea; text-decoration:none; }
+    .pill:hover { filter:brightness(1.1); }
+  </style>
 </head>
 <body>
   <nav class="nav">
-  <a href="index.html" class="logo">Crystal Energy Guide</a>
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="crystals.html">Crystals</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="login.html" id="loginLink">Login</a></li>
-  </ul>
-</nav>
+    <a href="index.html" class="logo">Crystal Energy Guide</a>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="crystals.html">Crystals</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html" id="loginLink">Login</a></li>
+    </ul>
+  </nav>
 
   <main class="container">
-    
-  <h1>Crystals</h1>
-  <input id="search" type="text" placeholder="Search crystals or intentions..." />
-  <section id="crystalList" class="grid"></section>
+    <div class="page-head">
+      <h1 style="margin:0;">Crystals</h1>
+      <button id="addBtn" class="pill">＋ Add Crystal</button>
+    </div>
 
+    <input id="search" type="text" placeholder="Search crystals or intentions..." />
+    <section id="crystalList" class="grid"></section>
   </main>
+
   <footer class="footer">© 2025 Crystal Energy Guide</footer>
 
-  <!-- Add Crystal Form Popup -->
-<div id="addForm" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
-  <div style="background:#1a1a1a; color:white; padding:20px; border-radius:12px; width:320px;">
-    <h2>Add New Crystal</h2>
-    <input id="crystalName" placeholder="Crystal Name" style="width:100%; margin:5px 0; padding:8px;">
-    <input id="crystalMeaning" placeholder="Meaning" style="width:100%; margin:5px 0; padding:8px;">
-    <input id="crystalTags" placeholder="Tags (comma separated)" style="width:100%; margin:5px 0; padding:8px;">
-    <button id="saveCrystal" style="margin-top:10px; padding:8px 12px;">Save Crystal</button>
-    <button id="closeForm" style="margin-top:10px; padding:8px 12px;">Cancel</button>
+  <!-- Add Crystal Modal -->
+  <div id="addFormOverlay">
+    <div id="addFormCard">
+      <h2>Add New Crystal</h2>
+      <input id="crystalName" class="af-field" placeholder="Crystal Name (e.g., Rose Quartz)">
+      <input id="crystalMeaning" class="af-field" placeholder="Meaning (short phrase)">
+      <input id="crystalTags" class="af-field" placeholder="Tags (comma separated: love, protection, clarity)">
+      <div class="af-row">
+        <button id="closeForm" class="af-btn af-ghost">Cancel</button>
+        <button id="saveCrystal" class="af-btn af-primary">Save</button>
+      </div>
+    </div>
   </div>
-</div>
 
-<script>
-(function () {
-  const STORAGE_KEY = "ceg_crystals";
-  const addBtn = document.getElementById("addBtn");
-  const addForm = document.getElementById("addForm");
-  const saveBtn = document.getElementById("saveCrystal");
-  const closeBtn = document.getElementById("closeForm");
+  <script>
+  (function () {
+    const STORAGE_KEY = "ceg_crystals";
 
-  // Show the add form popup
-  addBtn.addEventListener("click", () => {
-    addForm.style.display = "flex";
-  });
+    const addBtn   = document.getElementById("addBtn");
+    const overlay  = document.getElementById("addFormOverlay");
+    const closeBtn = document.getElementById("closeForm");
+    const saveBtn  = document.getElementById("saveCrystal");
 
-  // Close the form
-  closeBtn.addEventListener("click", () => {
-    addForm.style.display = "none";
-  });
+    if (!addBtn || !overlay || !closeBtn || !saveBtn) return; // hard guard
 
-  // Save new crystal to localStorage
-  saveBtn.addEventListener("click", () => {
-    const name = document.getElementById("crystalName").value.trim();
-    const meaning = document.getElementById("crystalMeaning").value.trim();
-    const tags = document.getElementById("crystalTags").value.trim().split(",").map(t => t.trim());
+    addBtn.addEventListener("click", () => { overlay.style.display = "block"; });
+    closeBtn.addEventListener("click", () => { overlay.style.display = "none"; });
 
-    if (!name || !meaning) {
-      alert("Please fill out the name and meaning.");
-      return;
-    }
-
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    existing.push({
-      name,
-      meaning,
-      tags,
+    // close when clicking outside the card
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) overlay.style.display = "none";
     });
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
-    alert(`${name} has been added!`);
-    location.reload();
-  });
-})();
-</script>
+    saveBtn.addEventListener("click", () => {
+      const name    = document.getElementById("crystalName").value.trim();
+      const meaning = document.getElementById("crystalMeaning").value.trim();
+      const tagsRaw = document.getElementById("crystalTags").value.trim();
 
+      if (!name || !meaning) { alert("Please add a name and meaning."); return; }
+
+      const tags = tagsRaw
+        ? tagsRaw.split(",").map(t => t.trim()).filter(Boolean)
+        : [];
+
+      const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      existing.push({ name, meaning, tags });
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+
+      // reset + close + refresh list (your app.js should re-read on load)
+      document.getElementById("crystalName").value = "";
+      document.getElementById("crystalMeaning").value = "";
+      document.getElementById("crystalTags").value = "";
+      overlay.style.display = "none";
+      location.reload();
+    });
+  })();
+  </script>
 </body>
 </html>
