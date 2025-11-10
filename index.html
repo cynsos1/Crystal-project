@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Security policy (same as before) -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self';
                  img-src 'self' https:;
@@ -13,7 +15,10 @@
                  form-action 'self';
                  frame-ancestors 'none';
                  upgrade-insecure-requests">
+
   <title>Crystal Energy Guide</title>
+
+  <!-- Existing page styling -->
   <style>
     :root {
       --bg: 252 60% 99%;
@@ -51,23 +56,38 @@
     form label { display: block; margin-bottom: .8rem; }
     input { width: 100%; padding: .5rem; border: 1px solid hsl(var(--ink)/0.2); border-radius: .4rem; }
   </style>
+
+  <!-- 🌙 Link the spooky sky stylesheet -->
+  <link rel="stylesheet" href="css/sky.css">
 </head>
+
 <body>
+  <!-- 🌌 Spooky night sky layer (behind everything) -->
+  <div id="sky" aria-hidden="true">
+    <div class="moon"></div>
+  </div>
+
   <header>
     <div class="container nav">
       <h2>Crystal Energy Guide</h2>
       <button class="btn primary" id="addCrystal">+ Add Crystal</button>
     </div>
   </header>
+
   <main class="container">
     <section class="hero">
-      <input id="q" type="search" placeholder="Search crystals..." style="width:100%;padding:.8rem;border:1px solid hsl(var(--ink)/0.2);border-radius:.5rem;">
+      <input id="q" type="search" placeholder="Search crystals..."
+             style="width:100%;padding:.8rem;border:1px solid hsl(var(--ink)/0.2);border-radius:.5rem;">
     </section>
+
     <section id="gridView" class="grid"></section>
+
     <dialog class="modal" id="editor">
-      <header style="display:flex;justify-content:space-between;align-items:center;padding:1rem;border-bottom:1px solid hsl(var(--ink)/0.1);">
+      <header style="display:flex;justify-content:space-between;align-items:center;
+                     padding:1rem;border-bottom:1px solid hsl(var(--ink)/0.1);">
         <strong id="editorTitle">Add / Edit Crystal</strong>
-        <button id="closeEditor" style="background:none;border:0;font-size:1.2rem;cursor:pointer;">×</button>
+        <button id="closeEditor"
+                style="background:none;border:0;font-size:1.2rem;cursor:pointer;">×</button>
       </header>
       <div class="content">
         <form id="crystalForm">
@@ -84,6 +104,10 @@
       </div>
     </dialog>
   </main>
+
+  <!-- your main page script -->
   <script src="js/crystals.js" defer></script>
+  <!-- spooky sky animation script -->
+  <script src="js/sky.js" defer></script>
 </body>
 </html>
