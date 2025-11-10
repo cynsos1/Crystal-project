@@ -1,148 +1,89 @@
-/* ===== Crystal Energy Guide – Dark Neon Makeover ===== */
-:root{
-  --bg-0:#0c0b12;
-  --bg-1:#111018;
-  --card:#141323;
-  --muted:#a9a7c7;
-  --text:#f4f2ff;
-  --accent:#8b5cf6;      /* purple */
-  --accent-2:#22d3ee;    /* teal pop */
-  --chip:#2a2842;
-  --chip-text:#d8d6ff;
-  --ring: 0 0 0 2px rgba(139,92,246,.35), 0 6px 22px rgba(139,92,246,.18);
-  --shadow: 0 10px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.03);
-  --radius:16px;
-}
-
-/* page bg */
-html,body{
-  height:100%;
-  background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(139,92,246,.15), transparent 60%),
-    radial-gradient(900px 500px at 110% 20%, rgba(34,211,238,.12), transparent 55%),
-    linear-gradient(180deg, var(--bg-0), var(--bg-1));
-  color:var(--text);
-  font: 500 16px/1.6 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-  -webkit-font-smoothing:antialiased;
-  margin:0;
-}
-
-/* nav */
-.nav{
-  position: sticky; top:0; z-index:40;
-  backdrop-filter: blur(8px);
-  background: rgba(12,11,18,.6);
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.nav .logo{
-  display:inline-block; padding:18px 22px; font-weight:700; text-decoration:none; color:var(--text);
-}
-.nav ul{list-style:none; margin:0; padding:0 16px; display:flex; gap:10px; align-items:center;}
-.nav li a{
-  color:var(--muted); text-decoration:none; padding:8px 12px; border-radius:999px;
-}
-.nav li a:hover{ color:var(--text); background:rgba(255,255,255,.06); }
-
-/* container */
-.container{ max-width:1180px; margin:40px auto; padding:0 20px; }
-
-/* page header row */
-.page-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; }
-.page-head h1{ margin:0; font-size:34px; letter-spacing:.2px; }
-
-/* button – pill */
-.btn{
-  display:inline-flex; align-items:center; gap:8px;
-  background:linear-gradient(135deg, var(--accent), #6d28d9);
-  color:#fff; border:0; padding:10px 16px; border-radius:999px;
-  box-shadow: var(--ring);
-  cursor:pointer; font-weight:600;
-}
-.btn:hover{ filter:brightness(1.06); transform:translateY(-1px); }
-.btn:active{ transform:translateY(0); }
-
-/* search */
-#search{
-  width:100%; padding:14px 16px; margin:10px 0 24px;
-  color:var(--text); background:#0f0e19; border:1px solid rgba(255,255,255,.08);
-  border-radius:12px; outline:none;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
-}
-#search::placeholder{ color:#8b88a9; }
-#search:focus{ box-shadow: var(--ring); }
-
-/* grid */
-.grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap:22px;
-}
-
-/* make ANY child of #crystalList look like a card (no class changes needed) */
-#crystalList > *{
-  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00)),
-              var(--card);
-  border:1px solid rgba(255,255,255,.06);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow:hidden;
-  transition:.25s ease;
-}
-#crystalList > *:hover{ transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,.55); }
-
-/* top art zone */
-#crystalList > *::before{
-  content:"";
-  display:block; height:150px;
-  background:
-    radial-gradient(140px 80px at 70% -10%, rgba(139,92,246,.35), transparent 50%),
-    radial-gradient(120px 70px at -10% 110%, rgba(34,211,238,.25), transparent 55%),
-    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.00));
-  mask:
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 70"><path d="M50 4 L90 26 L70 66 L30 66 L10 26 Z" fill="none" stroke="%238b5cf6" stroke-width="6" stroke-linejoin="round"/></svg>')
-    center/70% 70% no-repeat, linear-gradient(#000,#000);
-}
-
-/* card body */
-#crystalList > * > *{ padding:16px 16px 18px; }
-#crystalList h3, #crystalList .title{
-  margin:6px 0 2px; font-size:18px; line-height:1.3;
-}
-#crystalList p, #crystalList .subtitle{ margin:0 0 10px; color:var(--muted); }
-
-/* chips */
-.tag, .chip{
-  display:inline-flex; align-items:center; padding:6px 10px;
-  border-radius:999px; background:var(--chip); color:var(--chip-text);
-  font-size:12px; margin:4px 6px 0 0; border:1px solid rgba(255,255,255,.06);
-}
-
-/* action row */
-.card-actions, #crystalList .actions{ display:flex; gap:8px; margin-top:12px; }
-button, .btn-ghost{
-  background:#1a1930; color:#e9e6ff; border:1px solid rgba(255,255,255,.08);
-  padding:8px 12px; border-radius:10px; cursor:pointer;
-}
-button:hover, .btn-ghost:hover{ background:#221f3e; }
-
-/* footer */
-.footer{
-  color:#8f8cae; padding:36px 0; text-align:center;
-  border-top:1px solid rgba(255,255,255,.06);
-  background:linear-gradient(180deg, transparent, rgba(255,255,255,.02));
-}
-
-#addFormOverlay{ display:none; position:fixed; inset:0; z-index:9999; 
-  background:rgba(6,5,12,.7); backdrop-filter: blur(8px); }
-#addFormCard{
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  width:min(92vw,460px); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)), var(--card);
-  border:1px solid rgba(255,255,255,.08); border-radius:18px; padding:20px; color:var(--text);
-  box-shadow: var(--shadow);
-}
-#addFormCard h2{ margin:0 0 12px; }
-.af-field{ width:100%; padding:12px 14px; margin:8px 0;
-  background:#0f0e19; border:1px solid rgba(255,255,255,.08); border-radius:12px; color:var(--text); }
-.af-row{ display:flex; justify-content:flex-end; gap:10px; }
-.af-primary{ background:linear-gradient(135deg, var(--accent), #6d28d9); color:#fff; border:0; }
-.af-ghost{ background:transparent; color:#d7d5ff; }
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 img-src 'self' https:;
+                 style-src 'self' 'unsafe-inline';
+                 script-src 'self';
+                 object-src 'none';
+                 base-uri 'self';
+                 form-action 'self';
+                 frame-ancestors 'none';
+                 upgrade-insecure-requests">
+  <title>Crystal Energy Guide</title>
+  <style>
+    :root {
+      --bg: 252 60% 99%;
+      --card: 0 0% 100%;
+      --ink: 252 38% 12%;
+      --muted: 252 14% 38%;
+      --primary: 270 75% 55%;
+      --accent: 190 85% 45%;
+      --radius: 1.25rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: hsl(var(--bg));
+      color: hsl(var(--ink));
+    }
+    .container { width: min(1100px, 92vw); margin-inline: auto; }
+    header { position: sticky; top: 0; background: hsl(var(--bg)); padding: 1rem 0; border-bottom: 1px solid hsl(var(--ink)/0.1); }
+    .nav { display: flex; justify-content: space-between; align-items: center; }
+    .btn { border: 0; border-radius: 999px; padding: .6rem 1rem; cursor: pointer; }
+    .primary { background: hsl(var(--primary)); color: #fff; }
+    .hero { padding: 2rem 0; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); }
+    .card { background: hsl(var(--card)); border: 1px solid hsl(var(--ink)/0.1); border-radius: var(--radius); box-shadow: 0 6px 18px hsl(var(--ink)/0.08); overflow: hidden; }
+    .thumb { aspect-ratio: 16/10; background: hsl(var(--primary)/0.1); display: grid; place-items: center; }
+    .body { padding: 1rem; }
+    .title { margin: 0; font-weight: 700; }
+    .subtitle { margin: .3rem 0 .6rem; color: hsl(var(--muted)); }
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .tag { background: hsl(var(--primary)/0.1); border-radius: 999px; padding: .2rem .6rem; font-size: .8rem; color: hsl(var(--primary)); }
+    .actions-row { display: flex; justify-content: space-between; align-items: center; padding: 0 1rem 1rem; }
+    dialog.modal { border: 0; border-radius: var(--radius); padding: 0; width: min(400px, 90vw); }
+    dialog .content { padding: 1rem; }
+    form label { display: block; margin-bottom: .8rem; }
+    input { width: 100%; padding: .5rem; border: 1px solid hsl(var(--ink)/0.2); border-radius: .4rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <h2>Crystal Energy Guide</h2>
+      <button class="btn primary" id="addCrystal">+ Add Crystal</button>
+    </div>
+  </header>
+  <main class="container">
+    <section class="hero">
+      <input id="q" type="search" placeholder="Search crystals..." style="width:100%;padding:.8rem;border:1px solid hsl(var(--ink)/0.2);border-radius:.5rem;">
+    </section>
+    <section id="gridView" class="grid"></section>
+    <dialog class="modal" id="editor">
+      <header style="display:flex;justify-content:space-between;align-items:center;padding:1rem;border-bottom:1px solid hsl(var(--ink)/0.1);">
+        <strong id="editorTitle">Add / Edit Crystal</strong>
+        <button id="closeEditor" style="background:none;border:0;font-size:1.2rem;cursor:pointer;">×</button>
+      </header>
+      <div class="content">
+        <form id="crystalForm">
+          <input type="hidden" id="fId">
+          <label>Name <input id="fName" required minlength="2"></label>
+          <label>Meaning <input id="fMeaning" required minlength="3"></label>
+          <label>Category / Intention <input id="fCategory" required></label>
+          <label>Image URL <input id="fImage" type="url"></label>
+          <div style="display:flex;gap:.5rem;justify-content:flex-end;">
+            <button type="button" class="btn" id="cancelEdit">Cancel</button>
+            <button type="submit" class="btn primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </dialog>
+  </main>
+  <script src="js/crystals.js" defer></script>
+</body>
+</html>
