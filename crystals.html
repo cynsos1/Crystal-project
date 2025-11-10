@@ -1,1 +1,172 @@
-1
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- CSP stays strict: external scripts only (no inline JS) -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 img-src 'self' https:;
+                 style-src 'self' 'unsafe-inline';
+                 script-src 'self';
+                 object-src 'none';
+                 base-uri 'self';
+                 form-action 'self';
+                 frame-ancestors 'none';
+                 upgrade-insecure-requests">
+
+  <title>Crystal Energy Guide</title>
+
+  <style>
+    :root {
+      --bg: 252 60% 99%;
+      --card: 0 0% 100%;
+      --ink: 252 38% 12%;
+      --muted: 252 14% 38%;
+      --primary: 270 75% 55%;
+      --accent: 190 85% 45%;
+      --radius: 1.25rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: hsl(var(--bg));
+      color: hsl(var(--ink));
+    }
+    .container { width: min(1100px, 92vw); margin-inline: auto; }
+    header { position: sticky; top: 0; background: hsl(var(--bg)); padding: 1rem 0; border-bottom: 1px solid hsl(var(--ink)/0.1); }
+    .nav { display: flex; justify-content: space-between; align-items: center; }
+    .btn { border: 0; border-radius: 999px; padding: .6rem 1rem; cursor: pointer; }
+    .primary { background: hsl(var(--primary)); color: #fff; }
+    .hero { padding: 2rem 0; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); }
+    .card { background: hsl(var(--card)); border: 1px solid hsl(var(--ink)/0.1); border-radius: var(--radius); box-shadow: 0 6px 18px hsl(var(--ink)/0.08); overflow: hidden; }
+    .thumb { aspect-ratio: 16/10; background: hsl(var(--primary)/0.1); display: grid; place-items: center; }
+    .body { padding: 1rem; }
+    .title { margin: 0; font-weight: 700; }
+    .subtitle { margin: .3rem 0 .6rem; color: hsl(var(--muted)); }
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .tag { background: hsl(var(--primary)/0.1); border-radius: 999px; padding: .2rem .6rem; font-size: .8rem; color: hsl(var(--primary)); }
+    .actions-row { display: flex; justify-content: space-between; align-items: center; padding: 0 1rem 1rem; }
+    dialog.modal { border: 0; border-radius: var(--radius); padding: 0; width: min(400px, 90vw); }
+    dialog .content { padding: 1rem; }
+    form label { display: block; margin-bottom: .8rem; }
+    input { width: 100%; padding: .5rem; border: 1px solid hsl(var(--ink)/0.2); border-radius: .4rem; }
+
+    /* ===== Spooky Night Sky (background layer) ===== */
+    html, body { background: #0b0b12; }
+    /* keep content above the sky */
+    header, .container, footer { position: relative; z-index: 2; }
+
+    /* sky canvas */
+    #sky{
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(1200px 700px at 50% -20%, rgba(88,47,255,0.18), transparent 60%),
+        radial-gradient(900px 500px at 110% 20%, rgba(0,204,255,0.12), transparent 55%),
+        linear-gradient(#05050a,#0b0b12 45%, #0e0b17);
+      filter: saturate(1.05) contrast(1.05);
+    }
+
+    /* moon */
+    #sky .moon{
+      position: absolute;
+      top: 70px; right: 8%;
+      width: 120px; aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 35%, #fff, #e9e7ff 40%, #c3c0ff 65%, #978fff 85%, #6b62d8 100%);
+      box-shadow:
+        0 0 40px 10px rgba(180,170,255,.25),
+        0 0 140px 40px rgba(120,110,255,.18);
+      animation: moonGlow 6s ease-in-out infinite alternate;
+    }
+    @keyframes moonGlow { to { box-shadow:
+      0 0 55px 18px rgba(200,190,255,.32),
+      0 0 180px 55px rgba(140,130,255,.22); } }
+
+    /* stars */
+    .star{
+      position:absolute; width:2px; height:2px; border-radius:50%;
+      background: #d9d7ff; opacity:.8;
+      box-shadow:0 0 6px 1px rgba(220,215,255,.55);
+      animation: twinkle var(--twinkle,3s) ease-in-out infinite;
+    }
+    @keyframes twinkle{
+      0%,100%{ transform:scale(0.9); opacity:.6;}
+      50%{ transform:scale(1.25); opacity:1;}
+    }
+
+    /* shooting star */
+    .shoot{
+      --len: 160px;
+      position:absolute; top: 20%; left: -200px;
+      width: 2px; height: 2px; border-radius:50%;
+      background: #fff;
+      box-shadow: 0 0 8px 3px rgba(255,255,255,.9);
+      transform: rotate(15deg);
+      filter: drop-shadow(-20px 10px 6px rgba(255,255,255,.8));
+      animation: fly 2.2s linear forwards;
+    }
+    .shoot::after{
+      content:"";
+      position:absolute; right:2px; top:0; height:2px; width: var(--len);
+      background: linear-gradient(90deg, rgba(255,255,255,0.85), rgba(255,255,255,0));
+      transform: translateX(-100%);
+    }
+    @keyframes fly{
+      from { transform: translate3d(0,0,0) rotate(15deg); opacity:1; }
+      to   { transform: translate3d(130vw,40vh,0) rotate(15deg); opacity:0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌙 Spooky Night Sky (behind everything) -->
+  <div id="sky" aria-hidden="true">
+    <div class="moon"></div>
+  </div>
+
+  <header>
+    <div class="container nav">
+      <h2>Crystal Energy Guide</h2>
+      <button class="btn primary" id="addCrystal">+ Add Crystal</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <input id="q" type="search" placeholder="Search crystals..." style="width:100%;padding:.8rem;border:1px solid hsl(var(--ink)/0.2);border-radius:.5rem;">
+    </section>
+
+    <section id="gridView" class="grid"></section>
+
+    <dialog class="modal" id="editor">
+      <header style="display:flex;justify-content:space-between;align-items:center;padding:1rem;border-bottom:1px solid hsl(var(--ink)/0.1);">
+        <strong id="editorTitle">Add / Edit Crystal</strong>
+        <button id="closeEditor" style="background:none;border:0;font-size:1.2rem;cursor:pointer;">×</button>
+      </header>
+      <div class="content">
+        <form id="crystalForm">
+          <input type="hidden" id="fId">
+          <label>Name <input id="fName" required minlength="2"></label>
+          <label>Meaning <input id="fMeaning" required minlength="3"></label>
+          <label>Category / Intention <input id="fCategory" required></label>
+          <label>Image URL <input id="fImage" type="url"></label>
+          <div style="display:flex;gap:.5rem;justify-content:flex-end;">
+            <button type="button" class="btn" id="cancelEdit">Cancel</button>
+            <button type="submit" class="btn primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </dialog>
+  </main>
+
+  <!-- Your page logic -->
+  <script src="js/crystals.js" defer></script>
+  <!-- Sky logic (separate file so CSP allows it) -->
+  <script src="js/sky.js" defer></script>
+</body>
+</html>
