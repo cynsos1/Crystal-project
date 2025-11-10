@@ -27,5 +27,61 @@
 
   </main>
   <footer class="footer">© 2025 Crystal Energy Guide</footer>
+
+  <!-- Add Crystal Form Popup -->
+<div id="addForm" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
+  <div style="background:#1a1a1a; color:white; padding:20px; border-radius:12px; width:320px;">
+    <h2>Add New Crystal</h2>
+    <input id="crystalName" placeholder="Crystal Name" style="width:100%; margin:5px 0; padding:8px;">
+    <input id="crystalMeaning" placeholder="Meaning" style="width:100%; margin:5px 0; padding:8px;">
+    <input id="crystalTags" placeholder="Tags (comma separated)" style="width:100%; margin:5px 0; padding:8px;">
+    <button id="saveCrystal" style="margin-top:10px; padding:8px 12px;">Save Crystal</button>
+    <button id="closeForm" style="margin-top:10px; padding:8px 12px;">Cancel</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  const STORAGE_KEY = "ceg_crystals";
+  const addBtn = document.getElementById("addBtn");
+  const addForm = document.getElementById("addForm");
+  const saveBtn = document.getElementById("saveCrystal");
+  const closeBtn = document.getElementById("closeForm");
+
+  // Show the add form popup
+  addBtn.addEventListener("click", () => {
+    addForm.style.display = "flex";
+  });
+
+  // Close the form
+  closeBtn.addEventListener("click", () => {
+    addForm.style.display = "none";
+  });
+
+  // Save new crystal to localStorage
+  saveBtn.addEventListener("click", () => {
+    const name = document.getElementById("crystalName").value.trim();
+    const meaning = document.getElementById("crystalMeaning").value.trim();
+    const tags = document.getElementById("crystalTags").value.trim().split(",").map(t => t.trim());
+
+    if (!name || !meaning) {
+      alert("Please fill out the name and meaning.");
+      return;
+    }
+
+    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    existing.push({
+      name,
+      meaning,
+      tags,
+    });
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+    alert(`${name} has been added!`);
+    location.reload();
+  });
+})();
+</script>
+
 </body>
 </html>
