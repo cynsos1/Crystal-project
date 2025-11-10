@@ -1,31 +1,379 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Home - Crystal💎 Energy Guide</title>
-  <link rel="stylesheet" href="css/styles.css"/>
-  <script defer src="js/app.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crystal Energy Guide</title>
+  <style>
+   
+    :root {
+      --bg: 252 60% 99%;
+      --card: 0 0% 100%;
+      --ink: 252 38% 12%;
+      --muted: 252 14% 38%;
+      --primary: 270 75% 55%; /* amethyst */
+      --primary-600: 270 70% 50%;
+      --primary-700: 270 65% 45%;
+      --accent: 190 85% 45%;  /* teal */
+      --ring: 270 75% 60%;
+      --shadow: 255 20% 10% / 0.08;
+      --radius: 1.25rem;
+      --radius-sm: 0.875rem;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: 252 20% 9%;
+        --card: 252 10% 13%;
+        --ink: 252 50% 98%;
+        --muted: 252 12% 70%;
+        --shadow: 255 20% 3% / 0.35;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font: 15px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: hsl(var(--ink));
+      background:
+        radial-gradient(1200px 800px at 10% -10%, hsl(270 90% 96% / 0.7), transparent),
+        radial-gradient(900px 700px at 100% 0%, hsl(190 75% 92% / 0.6), transparent),
+        hsl(var(--bg));
+    }
+    img { max-width: 100%; display: block; }
+    a { color: hsl(var(--primary)); text-decoration: none; }
+
+ 
+    .container { width: min(1100px, 92vw); margin-inline: auto; }
+    .stack { display: grid; gap: 1rem; }
+
+    header.site {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: saturate(1.2) blur(8px);
+      background: linear-gradient(to bottom, hsl(var(--bg) / 0.85), transparent);
+      border-bottom: 1px solid hsl(var(--ink) / 0.06);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 0; }
+    .brand { display: flex; align-items: center; gap: .7rem; font-weight: 700; letter-spacing: .2px; }
+    .brand svg { width: 28px; height: 28px; }
+
+    .actions { display: flex; gap: .6rem; align-items: center; }
+    .btn {
+      appearance: none; border: 0; cursor: pointer;
+      padding: .6rem .9rem; border-radius: 999px;
+      background: hsl(var(--ink) / 0.06);
+      color: hsl(var(--ink));
+      transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn.primary { background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))); color: white; box-shadow: 0 6px 18px hsl(var(--shadow)); }
+
+    .hero { padding: 2.2rem 0 1.2rem; }
+    .hero h1 { font-size: clamp(1.5rem, 1.2rem + 2vw, 2.25rem); margin: 0 0 .4rem; }
+    .hero p { color: hsl(var(--muted)); margin: 0; }
+
+    .toolbar { display: grid; gap: .75rem; grid-template-columns: 1fr; margin-top: 1rem; }
+    @media (min-width: 720px) { .toolbar { grid-template-columns: 1fr auto; align-items: center; } }
+
+    .search {
+      display: grid; grid-template-columns: 1fr auto; gap: .5rem; align-items: center;
+      background: hsl(var(--card)); border-radius: var(--radius);
+      padding: .45rem; box-shadow: 0 8px 24px hsl(var(--shadow));
+      border: 1px solid hsl(var(--ink) / 0.06);
+    }
+    .search input {
+      width: 100%; border: 0; outline: none; background: transparent;
+      padding: .8rem 1rem; font-size: 1rem; color: hsl(var(--ink));
+    }
+    .chipbar { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .chip {
+      padding: .45rem .7rem; border-radius: 999px; border: 1px solid hsl(var(--ink) / 0.12);
+      background: hsl(var(--card)); color: hsl(var(--muted)); font-weight: 600; font-size: .9rem;
+      cursor: pointer; transition: background .2s ease, color .2s ease, border-color .2s ease, transform .15s ease;
+    }
+    .chip:is(:hover, .active) { background: hsl(var(--primary) / 0.1); color: hsl(var(--primary-700)); border-color: hsl(var(--primary) / 0.35); transform: translateY(-1px); }
+
+    /* --------------------
+       Grid / Cards
+    -------------------- */
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(1, minmax(0, 1fr)); margin: 1.25rem 0 2rem; }
+    @media (min-width: 560px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 900px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+    .card {
+      background: hsl(var(--card)); border-radius: var(--radius);
+      border: 1px solid hsl(var(--ink) / 0.06);
+      box-shadow: 0 12px 28px hsl(var(--shadow));
+      overflow: hidden; display: grid; grid-template-rows: auto 1fr auto;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px hsl(var(--shadow)); }
+    .thumb { aspect-ratio: 16/10; background: linear-gradient(135deg, hsl(var(--primary) / .15), hsl(var(--accent) / .15)); display: grid; place-items: center; }
+    .thumb svg { width: 64px; height: 64px; opacity: .65; }
+    .body { padding: 1rem 1rem 0.5rem; }
+    .title { font-weight: 800; margin: 0; font-size: 1.1rem; letter-spacing: .2px; }
+    .subtitle { margin: .35rem 0 .6rem; color: hsl(var(--muted)); font-size: .95rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .tag { font-size: .8rem; padding: .25rem .5rem; border-radius: 999px; background: hsl(var(--primary) / 0.12); color: hsl(var(--primary-700)); }
+    .actions-row { display: flex; justify-content: space-between; align-items: center; gap: .6rem; padding: 0 1rem 1rem; }
+
+    .link { font-weight: 700; }
+
+ 
+    .tablewrap { overflow: auto; border-radius: var(--radius); border: 1px solid hsl(var(--ink) / 0.06); background: hsl(var(--card)); box-shadow: 0 10px 26px hsl(var(--shadow)); }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { text-align: left; padding: .9rem 1rem; }
+    thead th { position: sticky; top: 0; background: hsl(var(--bg)); font-size: .9rem; color: hsl(var(--muted)); }
+    tbody tr { border-top: 1px solid hsl(var(--ink) / 0.06); }
+    tbody tr:hover { background: hsl(var(--primary) / 0.05); }
+
+  
+    dialog.modal { border: 0; border-radius: var(--radius); padding: 0; width: min(720px, 92vw);
+      box-shadow: 0 22px 60px hsl(var(--shadow)); background: hsl(var(--card)); }
+    .modal header { padding: 1rem 1.2rem; border-bottom: 1px solid hsl(var(--ink) / 0.06); display: flex; justify-content: space-between; align-items: center; }
+    .modal .content { padding: 1.2rem; }
+    .iconbtn { background: transparent; border: 0; cursor: pointer; padding: .5rem; border-radius: .75rem; }
+    .iconbtn:hover { background: hsl(var(--ink) / 0.06); }
+
+  
+    footer { color: hsl(var(--muted)); padding: 2rem 0 3rem; }
+  </style>
 </head>
 <body>
-  <nav class="nav">
-  <a href="index.html" class="logo">Crystal Energy Guide</a>
-  <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="crystals.html">Crystals</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="login.html" id="loginLink">Login</a></li>
-  </ul>
-</nav>
+  <header class="site">
+    <div class="container nav">
+      <div class="brand" aria-label="Crystal Energy Guide Home">
+       
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 2 3 9l9 13 9-13-9-7Z" stroke="hsl(var(--primary-600))" stroke-width="1.5" fill="hsl(var(--primary)/.25)"/>
+          <path d="M12 2v20M3 9h18M7 9l5 13 5-13" stroke="hsl(var(--accent))" stroke-width="1" opacity=".7"/>
+        </svg>
+        <span>Crystal Energy Guide</span>
+      </div>
+      <div class="actions">
+        <button class="btn" id="toggleView" title="Toggle list/grid">List View</button>
+        <button class="btn primary" id="addCrystal">+ Add Crystal</button>
+      </div>
+    </div>
+  </header>
 
   <main class="container">
-    
-  <h1>Find Your Crystal</h1>
-  <p>Explore crystals by intention—love, protection, balance, focus, and more.</p>
-  <a class="btn" href="crystals.html">Browse Crystals</a>
+    <section class="hero stack">
+      <div>
+        <h1>Find the right crystal for your intention ✨</h1>
+        <p>Browse by energy (love, protection, focus, clarity) or search by name and properties.</p>
+      </div>
 
+      <div class="toolbar">
+        <div class="search">
+          <input id="q" type="search" placeholder="Search crystals by name, color, chakra, or intention…" aria-label="Search" />
+          <button class="btn" id="clearSearch">Clear</button>
+        </div>
+        <div class="chipbar" role="tablist" aria-label="Filter by intention">
+          <button class="chip active" data-filter="all">All</button>
+          <button class="chip" data-filter="love">Love</button>
+          <button class="chip" data-filter="protection">Protection</button>
+          <button class="chip" data-filter="focus">Focus</button>
+          <button class="chip" data-filter="clarity">Clarity</button>
+          <button class="chip" data-filter="luck">Luck</button>
+        </div>
+      </div>
+    </section>
+
+   
+    <section id="gridView" class="grid" aria-live="polite">
+      
+      <article class="card" data-tags="love clarity heart chakra rose quartz">
+        <div class="thumb" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 21s-8-4.5-8-10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.5-10 10-10 10Z" stroke="hsl(var(--primary-600))" stroke-width="1.5" fill="hsl(var(--primary)/.2)"/>
+          </svg>
+        </div>
+        <div class="body">
+          <h3 class="title">Rose Quartz</h3>
+          <p class="subtitle">Unconditional love • Heart Chakra</p>
+          <div class="tags">
+            <span class="tag">Love</span>
+            <span class="tag">Clarity</span>
+          </div>
+        </div>
+        <div class="actions-row">
+          <a class="link" href="#" data-open="Rose Quartz">View details →</a>
+          <button class="btn" title="Add to favorites">♡ Save</button>
+        </div>
+      </article>
+
+      <article class="card" data-tags="protection focus root chakra black tourmaline">
+        <div class="thumb" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 20 9 3l6 3 5 14-16 0Z" stroke="hsl(var(--primary-600))" stroke-width="1.5" fill="hsl(var(--accent)/.2)"/>
+          </svg>
+        </div>
+        <div class="body">
+          <h3 class="title">Black Tourmaline</h3>
+          <p class="subtitle">Grounding shield • Root Chakra</p>
+          <div class="tags">
+            <span class="tag">Protection</span>
+            <span class="tag">Focus</span>
+          </div>
+        </div>
+        <div class="actions-row">
+          <a class="link" href="#" data-open="Black Tourmaline">View details →</a>
+          <button class="btn">♡ Save</button>
+        </div>
+      </article>
+
+      <article class="card" data-tags="luck focus throat chakra amazonite">
+        <div class="thumb" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="hsl(var(--primary-600))" stroke-width="1.5" fill="hsl(var(--primary)/.12)"/>
+          </svg>
+        </div>
+        <div class="body">
+          <h3 class="title">Amazonite</h3>
+          <p class="subtitle">Truth & harmony • Throat Chakra</p>
+          <div class="tags">
+            <span class="tag">Luck</span>
+            <span class="tag">Focus</span>
+          </div>
+        </div>
+        <div class="actions-row">
+          <a class="link" href="#" data-open="Amazonite">View details →</a>
+          <button class="btn">♡ Save</button>
+        </div>
+      </article>
+      
+    </section>
+
+  
+    <section id="listView" class="tablewrap" hidden>
+      <table role="table" aria-label="Crystal list">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Chakra</th>
+            <th>Intentions</th>
+            <th>Keywords</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr>
+            <td>Rose Quartz</td>
+            <td>Heart</td>
+            <td>Love, Clarity</td>
+            <td>rose quartz love heart clarity</td>
+            <td><a class="link" href="#" data-open="Rose Quartz">View →</a></td>
+          </tr>
+          <tr>
+            <td>Black Tourmaline</td>
+            <td>Root</td>
+            <td>Protection, Focus</td>
+            <td>black tourmaline root protection focus</td>
+            <td><a class="link" href="#" data-open="Black Tourmaline">View →</a></td>
+          </tr>
+          <tr>
+            <td>Amazonite</td>
+            <td>Throat</td>
+            <td>Luck, Focus</td>
+            <td>amazonite throat truth luck focus</td>
+            <td><a class="link" href="#" data-open="Amazonite">View →</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <dialog class="modal" id="details">
+      <header>
+        <strong id="detailsTitle">Crystal</strong>
+        <button class="iconbtn" id="closeDetails" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 7 7 17M7 7l10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </header>
+      <div class="content stack">
+        <p id="detailsText">Use this area to render full crystal info (properties, chakras, cleansing tips, and safety notes). Bind to your data or server template.</p>
+        <div class="tags"><span class="tag">Example Tag</span></div>
+      </div>
+    </dialog>
   </main>
-  <footer class="footer">© 2025 Crystal Energy Guide</footer>
+
+  <footer class="container">
+    <small>© <span id="year"></span> Crystal Energy Guide • Built with love and good vibes</small>
+  </footer>
+
+  <script>
+  
+    const q = document.getElementById('q');
+    const clearBtn = document.getElementById('clearSearch');
+    const chipbar = document.querySelector('.chipbar');
+    const grid = document.getElementById('gridView');
+    const list = document.getElementById('listView');
+    const toggleView = document.getElementById('toggleView');
+    const details = document.getElementById('details');
+    const detailsTitle = document.getElementById('detailsTitle');
+    const detailsText = document.getElementById('detailsText');
+    const closeDetails = document.getElementById('closeDetails');
+    const year = document.getElementById('year');
+    year.textContent = new Date().getFullYear();
+
+    
+    const filterUI = () => {
+      const term = (q.value || '').toLowerCase().trim();
+      const activeChip = chipbar.querySelector('.chip.active');
+      const target = activeChip?.dataset.filter || 'all';
+
+    
+      document.querySelectorAll('#gridView .card').forEach(card => {
+        const matchText = (card.dataset.tags || '').toLowerCase();
+        const matchesTerm = !term || matchText.includes(term);
+        const matchesChip = target === 'all' || matchText.includes(target);
+        card.style.display = matchesTerm && matchesChip ? '' : 'none';
+      });
+
+  
+      document.querySelectorAll('#tableBody tr').forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const matchesTerm = !term || text.includes(term);
+        const matchesChip = target === 'all' || text.includes(target);
+        row.style.display = matchesTerm && matchesChip ? '' : 'none';
+      });
+    };
+
+    q.addEventListener('input', filterUI);
+    clearBtn.addEventListener('click', () => { q.value = ''; filterUI(); q.focus(); });
+
+
+    chipbar.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chip');
+      if (!chip) return;
+      chipbar.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      filterUI();
+    });
+
+   
+    let listOn = false;
+    toggleView.addEventListener('click', () => {
+      listOn = !listOn;
+      grid.hidden = listOn; list.hidden = !listOn;
+      toggleView.textContent = listOn ? 'Grid View' : 'List View';
+    });
+
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('[data-open]');
+      if (!link) return;
+      e.preventDefault();
+      const name = link.getAttribute('data-open');
+      detailsTitle.textContent = name;
+      detailsText.textContent = `${name} — placeholder details. Replace with dynamic content from your database (meaning, chakra, cleansing, pairings).`;
+      details.showModal();
+    });
+    closeDetails.addEventListener('click', () => details.close());
+
+    document.getElementById('addCrystal').addEventListener('click', () => {
+      alert('Hook this up to your Add form or route (e.g., /crystals/new).');
+    });
+  </script>
 </body>
 </html>
